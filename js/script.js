@@ -1,19 +1,24 @@
 const btnReestablecer = document.getElementById("btnReestablecer");
 const contadorVisitas = document.getElementById("contadorVisitas");
 
-let contador = localStorage.getItem("contador");
+const getCount = parseInt(localStorage.getItem("visitCount")) || 0;
+const setCount = (visit) => localStorage.setItem("visitCount", visit);
 
-if (!contador) {
-    contador = 1;
-} else {
-    contador = Number.parseFloat(contador);
-    contador++;
-}
-localStorage.setItem("contador", contador);
+let visitCount = getCount;
 
-contadorVisitas.textContent = contador;
+const updateVisit = () => {
+    setCount(visitCount);
+    contadorVisitas.textContent = visitCount;
+};
+
+const removeCount = () => {
+    localStorage.removeItem("visitCount");
+    contadorVisitas.textContent = 0;
+};
+
+visitCount++;
+updateVisit();
 
 btnReestablecer.addEventListener("click", () => {
-    localStorage.removeItem("contador");
-    contadorVisitas.textContent = 0;
+    removeCount;
 });
